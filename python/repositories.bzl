@@ -162,6 +162,12 @@ def _python_repository_impl(rctx):
                     fail("The current user has CAP_DAC_OVERRIDE set, please drop this capability when using the hermetic Python interpreter. See https://github.com/bazelbuild/rules_python/pull/713.")
 
     python_bin = "python.exe" if ("windows" in platform) else "bin/python3"
+    print(native.bazel_version)
+    if _parse_native_bazel_version(native.bazel_version) >= (5,0,0):
+        abs_python_bin_path = rctx.path(python_bin)
+        stub_shebang_assignment = "stub_shebang = \"#!{}\"".format(abs_python_bin_path)
+    else:
+        stub_shebang_assignment = ""
 
     if "windows" in platform:
         glob_include = [
