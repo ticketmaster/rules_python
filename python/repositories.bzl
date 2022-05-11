@@ -61,6 +61,13 @@ def is_standalone_interpreter(rctx, python_interpreter_target):
         ),
     ]).return_code == 0
 
+# Parse the bazel version string from `native.bazel_version`.
+# e.g.
+# "0.10.0rc1 abc123d" => (0, 10, 0)
+# "0.3.0" => (0, 3, 0)
+def _parse_native_bazel_version(bazel_version):
+    return tuple([int(n) for n in bazel_version.split(".")])
+
 def _python_repository_impl(rctx):
     if rctx.attr.distutils and rctx.attr.distutils_content:
         fail("Only one of (distutils, distutils_content) should be set.")
@@ -238,6 +245,7 @@ py_runtime(
     files = [":files"],
     interpreter = "{python_path}",
     python_version = "PY3",
+    {stub_shebang_assignment}
 )
 
 py_runtime_pair(
@@ -249,6 +257,7 @@ py_runtime_pair(
         glob_include = repr(glob_include),
         python_path = python_bin,
         python_version = python_short_version,
+        stub_shebang_assignment = stub_shebang_assignment,
     )
     rctx.delete("python")
     rctx.symlink(python_bin, "python")
