@@ -162,18 +162,17 @@ def _python_repository_impl(rctx):
                     fail("The current user has CAP_DAC_OVERRIDE set, please drop this capability when using the hermetic Python interpreter. See https://github.com/bazelbuild/rules_python/pull/713.")
 
     python_bin = "python.exe" if ("windows" in platform) else "bin/python3"
-    print(native.bazel_version)
     if _parse_native_bazel_version(native.bazel_version) >= (5,0,0):
-        # abs_python_bin_path = rctx.path(python_bin)
-        # stub_shebang_assignment = "stub_shebang = \"#!{}\"".format(abs_python_bin_path)
+        abs_python_bin_path = rctx.path(python_bin)
+        stub_shebang_assignment = "stub_shebang = \"#!{}\"".format(abs_python_bin_path)
 
-        execroot = "/".join(str(rctx.path(".")).replace("\\", "/").split("/")[:-2])
-        print(execroot)
-        python_bin_path = str(rctx.path(python_bin)).removeprefix(execroot + "/")
-        print(python_bin_path)
-        shebang_line = "#!./" + python_bin_path
-        print(shebang_line)
-        stub_shebang_assignment = "stub_shebang = '{}',".format(shebang_line)
+        #execroot = "/".join(str(rctx.path(".")).replace("\\", "/").split("/")[:-2])
+        #print(execroot)
+        #python_bin_path = str(rctx.path(python_bin)).removeprefix(execroot + "/")
+        #print(python_bin_path)
+        #shebang_line = "#!./" + python_bin_path
+        #print(shebang_line)
+        #stub_shebang_assignment = "stub_shebang = '{}',".format(shebang_line)
     else:
         stub_shebang_assignment = ""
 
