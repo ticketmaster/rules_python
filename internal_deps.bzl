@@ -29,9 +29,9 @@ def rules_python_internal_deps():
     maybe(
         http_archive,
         name = "io_bazel_stardoc",
-        url = "https://github.com/bazelbuild/stardoc/archive/0.4.0.tar.gz",
-        sha256 = "6d07d18c15abb0f6d393adbd6075cd661a2219faab56a9517741f0fc755f6f3c",
-        strip_prefix = "stardoc-0.4.0",
+        url = "https://github.com/bazelbuild/stardoc/archive/0.5.3.tar.gz",
+        sha256 = "fc95cd29422f1d67395352804d03252aa77714e88dcbefd4d3b070d70ed75de7",
+        strip_prefix = "stardoc-0.5.3",
     )
 
     maybe(
